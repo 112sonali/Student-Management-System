@@ -6,10 +6,16 @@ class user(models.Model):
     email = models.EmailField(max_length=200)
     password = models.CharField(max_length=250)
 
+    def __str__(self):
+        return str(self.name)
+
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
     fees = models.IntegerField()
     duration = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.course_name)
 
 class Student(models.Model):
     name = models.CharField( max_length=200)
@@ -20,6 +26,9 @@ class Student(models.Model):
     degree = models.CharField(max_length=200)
     address = models.TextField()
     image = models.FileField(upload_to='profile', max_length=100 )
+
+    def __str__(self):
+        return str(self.name)
 
 
 

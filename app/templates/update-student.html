@@ -141,26 +141,14 @@
                 class="icon icon-lg icon-shape bg-gradient-info shadow-dark text-center border-radius-xl mt-n4 position-absolute">
                 <i class="material-icons opacity-10">weekend</i>
               </div>
-
               <div class="text-end pt-1">
-              
-                <a class="btn bg-gradient-dark mb-0" style="margin-left:810px;" href="javascript:;" data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"><i class="material-icons text-sm">add</i>Add Students</a>
-                  <div class="row">
-                    
-                  <form class="form-inline my-2 my-lg-0" action="/search/">
-                    <div class="col-lg-4">
-                    <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
-                  </div>
-                  <div class="col-lg-6">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
- </div>                 </form>
- 
-                  </div>
+                <a class="btn bg-gradient-dark mb-0" href="{% static 'javascript:;' %}" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"><i class="material-icons text-sm">add</i>Update Students</a>
               </div>
             </div>
           </div>
         </div>
+
       </div>
       <div class="row mt-4 mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -173,8 +161,6 @@
 
               </div>
             </div>
-            {% comment %} {% if stu %} {% endcomment %}
-
             <div class="card-body px-0 pb-2">
               <div class="table-responsive">
                 <table class="table align-items-center mb-0">
@@ -197,9 +183,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                  {% for s in student_obj  %}
+                  {% for s in student_obj %}
                    <tr>
-                      <td class="align-middle text-sm"><a href="{% url 'profile' s.id %}">{{s.name}}</a></td>
+                      <td class="align-middle text-sm"><a href="{% url 'student_profile' s.id %}">{{s.name}}</a></td>
                       <td class="align-middle text-sm">{{s.email}}</td>
                       <td class="align-middle text-center text-sm">{{s.mobile_no}}</td>
                       <td class="text-center text-sm">{{s.college}}</td>
@@ -207,21 +193,18 @@
                       <td class="text-center text-sm">{{s.courses}}</td>
                       <td class="text-center text-sm">{{s.address}}</td>
                       <td class="align-middle text-center text-sm">
-                      <a href="{% url 'delete_student' s.id %}" class="danger">delete</a>
+                      <a href="{% url 'delete' s.id %}" class="danger" type="submit">delete</a>
                         &nbsp;
-                      <a href="{% url 'updatestudent' s.id %}" class="danger" type="submit">update</a>
+                        <a href="{% url 'updatestudent' s.id %}" class="danger" type="submit">update</a>
                         &nbsp;
                         </td>
                       </tr>
                     </tr>
                   {% endfor %}
-                 
+                    
                     
                   </tbody>
                 </table>
-                {% comment %} {% else %} {% endcomment %}
-                {% comment %} <h4 class="text-center alert alert-warning">No Records</h4> {% endcomment %}
-                {% comment %} {% endif %} {% endcomment %}
               </div>
             </div>
           </div>
@@ -240,39 +223,45 @@
             </div>
             <div class="modal-body">
               <div class="card-body">
-                <form role="form" action="/add_students/" method="POST" enctype="multipart/form-data">
+                <form role="form" action="/update_student/" method="POST" enctype="multipart/form-data">
                  {% csrf_token %}
+                 <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                      <div class="input-group input-group-outline mb-3">
+                        <input type="hidden" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="uid" value="{{update_obj.id}}">
+                      </div>
+                    </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="name">
+                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="name" value="{{update_obj.name}}">
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="email">
+                        <input type="email" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="email" value="{{update_obj.email}}">
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Mobile No.</label>
-                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="mobile_no">
+                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="mobile_no" value="{{update_obj.mobile_no}}">
                       </div>
                     </div>
 
                     <div class="col-lg-6 col-md-6">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">College</label>
-                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="college">
+                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="college" value="{{update_obj.college}}">
                       </div>
                     </div>
 
                     <div class="col-lg-6 col-md-6">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Degree</label>
-                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="degree">
+                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="degree" value="{{update_obj.degree}}">
                       </div>
                     </div>
 
@@ -281,10 +270,10 @@
                       <div class="input-group input-group-outline mb-3">
                         <select class="form-select form-control" placeholder="courses" name="courses" onfocus="focused(this)"
                           onfocusout="defocused(this)" aria-label="Default select example">
-                          {% for c in course_obj %}
+                          {% for e in course_obj %}
                     
                         
-                          <option value={{c.id}}>{{c.course_name}} {{c.fees}} {{c.duration}}</option>
+                          <option value={{e.id}}>{{e.course_name}} {{e.fees}} {{e.duration}}</option>
                           {% endfor %}
                           
                       </select>
@@ -304,7 +293,7 @@
                     <div class="input-group input-group-outline mb-3">
                       <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Address</label>
-                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="address">
+                        <input type="text" class="form-control" onfocus="focused(this)" onfocusout="defocused(this)" name="address" value="{{update_obj.address}}">
                       </div>
                     </div>
                     
@@ -312,7 +301,7 @@
                     <div class="col-lg-12 col-md-12 my-2">
                       <div class="d-flex align-items-center justify-content-lg-between">
                         <label for="myfile">Upload Image : </label>
-                        <input type="file"  name="image">
+                        <input type="file"  name="image" value="{{update_obj.image}}">
                       </div>
                     </div>
 
