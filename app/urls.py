@@ -2,6 +2,7 @@ from django.urls import path
 from . views import *
 from  django.conf import settings
 from django.conf.urls.static import static
+from . api import *
 
 urlpatterns = [
     path("",index),
@@ -22,4 +23,11 @@ urlpatterns = [
     path("add_students/",add_students),
     path("student_profile/<int:pk>/", student_profile, name="student_profile"),
     path("search/",search,name='search'),
+    
+    # This is Api url
+    path("api/user/",Userapi.as_view()),
+    path("api/updateapi/<int:pk>/",updateapi.as_view()),
+    path("api/deleteapi/<int:pk>/",deleteapi.as_view()),
+
+
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
